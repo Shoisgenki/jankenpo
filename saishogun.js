@@ -1,45 +1,57 @@
-function getRandIndex(){
-    return Math.floor(Math.random() * 3);
-}
-
-function getComputerChoice(choice1, choice2, choice3){
-    var choices = [choice1, choice2, choice3];
+function getComputerChoice(){
+    function getRandIndex(){
+        return Math.floor(Math.random() * 3);
+    }
+    var choices = ["Rock", "Paper", "Scissors"];
     return choices[getRandIndex()];
 }
 
 function playRound(){
-    var computerSelection = getComputerChoice("Rock", "Paper", "Scissors").toLowerCase();
+    var computerSelection = getComputerChoice().toLowerCase();
 
     var playerSelection = prompt("Enter your choice").toLowerCase();
 
     if (computerSelection == playerSelection) {
-        console.log("It's a tie!");
+        return ("It's a tie!");
     }
 
-    else if (computerSelection == "rock" & playerSelection == "paper") {
-        console.log("You win! Paper beats Rock.");
-    }
-
-    else if (computerSelection == "paper" & playerSelection == "rock") {
-        console.log("You lose! Paper beats Rock.");
-    }
-
-    else if (computerSelection == "scissors" & playerSelection == "paper") {
-        console.log("You lose! Scissors beat Paper.");
-    }
-
-    else if (computerSelection == "scissors" & playerSelection == "rock") {
-        console.log("You win! Rock beats Scissors.");
-    }
-
-    else if (computerSelection == "paper" & playerSelection == "scissors") {
-        console.log("You win! Scissors beat Paper.");
+    else if (computerSelection == "rock" & playerSelection == "paper" || computerSelection == "paper" & playerSelection == "scissors" || computerSelection == "scissors" & playerSelection == "rock") {
+        return("You win!" + " " + playerSelection + " " + "beats" + " " + computerSelection);
     }
 
     else {
-        console.log("You lose! Rock beats Scissors")
+        return ("You lose! " + computerSelection + " beats " + playerSelection);
     }
 }
 
-playRound();
+function playGame(){
+    let playerScore = 0;
+    let computerScore = 0;
+    let tiedRounds = 0;
+    for(i=0; i<5; i++){
+        let result = playRound();
+        if (result.includes('win')) {
+            playerScore++;
+        }
+        else if (result.includes('lose')) {
+            computerScore++;
+        }
+        else {
+            tiedRounds++;
+        }
+    }
 
+    if (playerScore > computerScore){
+        console.log("You win! with a score of " + playerScore + " - " + computerScore);
+    }
+    else if (computerScore > playerScore){
+        console.log("You lose! with a score of " + playerScore + " - " + computerScore);
+    }
+    else {
+        console.log("Tie!");
+    }
+
+    console.log("Total tied rounds: " + tiedRounds);
+}
+
+playGame();
